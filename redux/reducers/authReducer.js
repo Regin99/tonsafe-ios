@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     fetching: true,
     address: null,
-    publicKey: 22,
+    publicKey: null,
     mnemonic: null,
     currency: 'USD',
     language: 'EN',

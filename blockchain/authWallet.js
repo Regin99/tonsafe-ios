@@ -1,15 +1,10 @@
-// import { TonClient } from "@ton/ton";
-import { mnemonicToWalletKey, mnemonicValidate } from '@ton/crypto';
-
-// Create Client
-// const client = new TonClient({
-//     endpoint: 'https://toncenter.com/api/v2/jsonRPC',
-// });
+import { mnemonicToWallet, validateMnemonicPhrase } from '../utils/helpers';
+import { encryptData } from '../utils/encryption';
 
 // Authorize Wallet
 const authorizeWallet = async (mnemonic, password) => {
     try {
-        const isValid = await mnemonicValidate(mnemonic);
+        const isValid = await validateMnemonicPhrase(mnemonic);
 
         if (!isValid) {
             return (isValid);
@@ -20,10 +15,18 @@ const authorizeWallet = async (mnemonic, password) => {
         }
 
         if (isValid && password) {
-            const { publicKey } = await mnemonicToWalletKey(mnemonic);
+            const { address, publicKey } = await mnemonicToWallet(mnemonic);
+            console.log(address, publicKey);
+            // const mnemonicEncrypt = await encryptData(mnemonic, password);
+
+            // return {
+            //     mnemonic: mnemonicEncrypt,
+            //     address: address.toString(false, true, true),
+            //     publicKey: publicKey
+            // };
         }
     } catch (error) {
-        console.error('Ошибка при авторизации кошелька:', error);
+        console.log('Ошибка при авторизации кошелька:', error);
     }
 };
 
